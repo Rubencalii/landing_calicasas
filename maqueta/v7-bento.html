@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calicasas · V7 Bento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#0a7d4d; --green-d:#055c34; --red:#c2161d; --azur:#0071bc; --gold:#d8a814;
+    --ink:#1c2422; --muted:#64716b; --line:#e7e9e4;
+    --bg:#eef0eb; --surface:#fff;
+    --font:'Inter',system-ui,sans-serif; --font-d:'Sora',system-ui,sans-serif;
+    --wrap:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.55}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--font-d);line-height:1.12;letter-spacing:-.02em}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+  .ribbon{background:#0d1411;color:var(--gold);text-align:center;font-size:.74rem;padding:6px;letter-spacing:.04em;font-weight:600}
+
+  header{padding:18px 0}
+  header .bar{display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{height:48px}
+  .brand b{font-family:var(--font-d);font-size:1.05rem;display:block;line-height:1.05}
+  .brand span{font-size:.72rem;color:var(--muted)}
+  nav ul{display:flex;gap:4px;list-style:none}
+  nav a{padding:9px 14px;border-radius:8px;font-weight:600;font-size:.9rem;color:var(--ink);transition:.15s}
+  nav a:hover{background:#fff}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.9rem;padding:11px 20px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:.15s}
+  .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-d)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--green)}
+  .btn-light{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.3)}.btn-light:hover{background:rgba(255,255,255,.28)}
+
+  /* Bento grid */
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(150px,auto);gap:16px;padding:8px 0 40px}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;position:relative;overflow:hidden;transition:.2s;animation:rise .6s both}
+  .box:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(28,36,34,.1)}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .box:nth-child(2){animation-delay:.05s}.box:nth-child(3){animation-delay:.1s}.box:nth-child(4){animation-delay:.15s}
+  .box:nth-child(5){animation-delay:.2s}.box:nth-child(6){animation-delay:.25s}.box:nth-child(7){animation-delay:.3s}
+  .box:nth-child(8){animation-delay:.35s}.box:nth-child(9){animation-delay:.4s}
+
+  .c-2{grid-column:span 2}.c-3{grid-column:span 3}.r-2{grid-row:span 2}
+
+  /* Hero box */
+  .hero{grid-column:span 2;grid-row:span 2;background:linear-gradient(150deg,var(--green),var(--green-d));color:#fff;display:flex;flex-direction:column;justify-content:space-between}
+  .hero::after{content:"";position:absolute;right:-50px;bottom:-50px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(216,168,20,.3),transparent 70%)}
+  .hero .tag{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .hero h1{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;margin:12px 0;position:relative;z-index:2}
+  .hero p{color:#d3ecdf;font-size:1rem;position:relative;z-index:2}
+  .hero .search{margin-top:18px;display:flex;background:#fff;border-radius:10px;padding:6px;position:relative;z-index:2}
+  .hero .search input{flex:1;border:0;outline:0;padding:10px 14px;font-size:.95rem;color:var(--ink);background:transparent}
+
+  .box .lbl{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .box .ic-top{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px}
+  .box h3{font-family:var(--font-d);font-size:1.15rem}
+
+  /* Aviso box (red) */
+  .aviso{background:linear-gradient(150deg,var(--red),#9e1118);color:#fff;grid-column:span 2}
+  .aviso .ic-top{background:rgba(255,255,255,.18)}.aviso .ic-top svg{stroke:#fff}
+  .aviso h3{color:#fff;margin:4px 0}.aviso p{color:#ffd9da;font-size:.9rem}
+  .aviso a{color:#fff;font-weight:600;font-size:.86rem;text-decoration:underline;margin-top:8px;display:inline-block}
+
+  /* Trámites box */
+  .tramites .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+  .tramites .t{text-align:center;padding:12px 6px;border-radius:12px;background:#f5f7f4;transition:.15s}
+  .tramites .t:hover{background:#e7f5ee}
+  .tramites .t svg{width:22px;height:22px;stroke:var(--green);margin-bottom:6px}
+  .tramites .t b{font-size:.74rem;color:var(--ink);display:block;line-height:1.2}
+
+  /* Evento destacado */
+  .evento{background:linear-gradient(150deg,#0a4f82,var(--azur));color:#fff}
+  .evento .lbl{color:#b9dcf3}
+  .evento .date{font-family:var(--font-d);font-size:2.6rem;font-weight:800;line-height:1}
+  .evento h3{color:#fff;margin:6px 0 4px}
+  .evento p{color:#cfe6f5;font-size:.88rem}
+
+  /* Calendar mini */
+  .cal .calhead{display:flex;justify-content:space-between;align-items:center;margin:10px 0 10px}
+  .cal .calhead b{font-family:var(--font-d);font-size:1rem}
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+  .calgrid .dw{font-size:.6rem;color:var(--muted);font-weight:700;padding:3px 0}
+  .calgrid .dy{padding:6px 0;font-size:.74rem;border-radius:7px;position:relative}
+  .calgrid .dy.mut{color:#c2c9c4}
+  .calgrid .dy.ev{background:#e7f5ee;color:var(--green);font-weight:700}
+  .calgrid .dy.ev::after{content:"";position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--red)}
+  .calgrid .dy.today{background:var(--green);color:#fff;font-weight:700}
+
+  /* Servicios mini list */
+  .svc-mini a{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem;font-weight:500}
+  .svc-mini a:last-child{border-bottom:0}
+  .svc-mini svg{width:18px;height:18px;stroke:var(--green);flex:none}
+  .svc-mini a:hover{color:var(--green)}
+
+  /* Contact box */
+  .contact{background:#1c2422;color:#fff}
+  .contact .lbl{color:#9aa6a0}
+  .contact .big{font-family:var(--font-d);font-size:1.5rem;font-weight:700;margin:8px 0}
+  .contact a.call{color:var(--gold);font-weight:600}
+  .contact .soc{display:flex;gap:8px;margin-top:14px}
+  .contact .soc a{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+  .contact .soc svg{width:16px;height:16px;stroke:#fff}
+
+  footer{padding:28px 0 40px;text-align:center;color:var(--muted);font-size:.84rem}
+  @media(max-width:980px){.bento{grid-template-columns:repeat(2,1fr)}.hero,.aviso,.c-2,.c-3{grid-column:span 2}.hero{grid-row:span 2}}
+  .menu-toggle{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;align-items:center;justify-content:center;color:var(--green)}
+  .menu-toggle svg{width:24px;height:24px}
+  @media(max-width:620px){
+    .menu-toggle{display:inline-flex}
+    .cta-desktop{display:none}
+    header .bar{position:relative}
+    nav#navmenu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 36px rgba(28,36,34,.16);z-index:60;padding:10px;margin-top:8px}
+    nav#navmenu.open{display:block}
+    nav#navmenu ul{flex-direction:column;gap:2px}
+    nav#navmenu a{display:block;padding:14px 16px;font-size:1rem}
+  }
+  @media(max-width:560px){.bento{grid-template-columns:1fr}.hero,.aviso,.c-2,.c-3,.r-2{grid-column:span 1;grid-row:auto}.tramites .grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="ribbon">✦ MAQUETA · DIRECCIÓN V7 «BENTO» — todo de un vistazo en tarjetas modulares (tendencia actual)</div>
+
+<header><div class="wrap"><div class="bar">
+  <a class="brand" href="#"><img src="assets/escudo-calicasas.svg" alt="Escudo de Calicasas"><span><b>Calicasas</b><span>Ayuntamiento · Granada</span></span></a>
+  <nav id="navmenu"><ul><li><a href="#">Inicio</a></li><li><a href="#">Ayuntamiento</a></li><li><a href="#">Tu Pueblo</a></li><li><a href="#">Servicios</a></li></ul></nav>
+  <a class="btn btn-green cta-desktop" href="#">Sede Electrónica</a>
+  <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navmenu" onclick="var n=document.getElementById('navmenu');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+</div></div></header>
+
+<div class="wrap">
+  <div class="bento">
+
+    <!-- HERO -->
+    <div class="box hero">
+      <div>
+        <p class="tag">Portal oficial · Vega de Granada</p>
+        <h1>Bienvenido a Calicasas</h1>
+        <p>Tus trámites, avisos y eventos del pueblo, todo en un mismo lugar.</p>
+      </div>
+      <form class="search" role="search"><input type="search" placeholder="¿Qué necesitas?" aria-label="Buscar"><button class="btn btn-green" type="submit">Buscar</button></form>
+    </div>
+
+    <!-- AVISO -->
+    <div class="box aviso">
+      <div class="ic-top"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M10.3 3.3L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.3a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+      <p class="lbl" style="color:#ffd9da">Aviso urgente</p>
+      <h3>Corte de agua · 26 de junio</h3>
+      <p>Casco antiguo, de 9:00 a 13:00 h.</p>
+      <a href="#">Más información →</a>
+    </div>
+
+    <!-- EVENTO DESTACADO -->
+    <div class="box evento">
+      <p class="lbl">Próximo evento</p>
+      <div class="date">28</div>
+      <h3>Fiesta Hawaiana</h3>
+      <p>Verano'25 · Parque Mariana Pineda</p>
+    </div>
+
+    <!-- TRÁMITES -->
+    <div class="box tramites c-2">
+      <p class="lbl">Trámites destacados</p>
+      <div class="grid">
+        <a class="t" href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><b>Cita Previa</b></a>
+        <a class="t" href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 11l18-9-9 18-2-7-7-2z"/></svg><b>Sede Electrónica</b></a>
+        <a class="t" href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><b>Pago Tributos</b></a>
+        <a class="t" href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><b>Padrón</b></a>
+        <a class="t" href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 3h14v18l-7-4-7 4z"/></svg><b>Bandos</b></a>
+        <a class="t" href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 7h-9M9 7H4M14 17H5"/><circle cx="9" cy="7" r="2"/><circle cx="14" cy="17" r="2"/></svg><b>Empleo</b></a>
+      </div>
+    </div>
+
+    <!-- CALENDARIO + SUSCRIPCIÓN -->
+    <div class="box cal r-2">
+      <p class="lbl">Agenda · Julio 2025</p>
+      <div class="calhead"><b>Julio</b><span style="color:var(--muted)">‹ ›</span></div>
+      <div class="calgrid">
+        <div class="dw">L</div><div class="dw">M</div><div class="dw">X</div><div class="dw">J</div><div class="dw">V</div><div class="dw">S</div><div class="dw">D</div>
+        <div class="dy mut">30</div><div class="dy">1</div><div class="dy">2</div><div class="dy">3</div><div class="dy ev">4</div><div class="dy">5</div><div class="dy">6</div>
+        <div class="dy ev">7</div><div class="dy">8</div><div class="dy ev">9</div><div class="dy">10</div><div class="dy ev">11</div><div class="dy">12</div><div class="dy">13</div>
+        <div class="dy ev">14</div><div class="dy">15</div><div class="dy">16</div><div class="dy">17</div><div class="dy">18</div><div class="dy">19</div><div class="dy">20</div>
+        <div class="dy ev">21</div><div class="dy">22</div><div class="dy">23</div><div class="dy">24</div><div class="dy">25</div><div class="dy">26</div><div class="dy">27</div>
+        <div class="dy ev">28</div><div class="dy">29</div><div class="dy">30</div><div class="dy">31</div><div class="dy mut">1</div><div class="dy mut">2</div><div class="dy mut">3</div>
+      </div>
+      <a class="btn btn-green" style="width:100%;justify-content:center;margin-top:14px" href="#"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Añadir a Google Calendar</a>
+      <a class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:8px" href="#">Apple / Outlook</a>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div class="box svc-mini">
+      <p class="lbl">Servicios</p>
+      <a href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0012 5 4.5 4.5 0 002 8.5C2 10.7 3.5 12.5 5 14l7 7z"/></svg> Centro de Salud</a>
+      <a href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/></svg> Biblioteca</a>
+      <a href="#"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg> Transporte</a>
+    </div>
+
+    <!-- CONTACTO -->
+    <div class="box contact">
+      <p class="lbl">Contacto</p>
+      <div class="big">958 40 96 01</div>
+      <p style="color:#9aa6a0;font-size:.86rem">Plaza de la Constitución, 1 · 18290</p>
+      <div class="soc">
+        <a href="#" aria-label="Facebook"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-12.5 7.3L3 21l2.3-5.4A8.4 8.4 0 1121 11.5z"/></svg></a>
+      </div>
+    </div>
+
+    <!-- CONOCE EL PUEBLO -->
+    <div class="box c-2" style="background:linear-gradient(150deg,#f4ecdd,#fff)">
+      <p class="lbl" style="color:var(--gold)">Conoce tu pueblo</p>
+      <h3 style="margin:6px 0">Historia, patrimonio y tradiciones</h3>
+      <p style="color:var(--muted);font-size:.9rem">El acueducto, las casas y el río Bermejo: tres símbolos en un escudo.</p>
+      <a class="btn btn-ghost" style="margin-top:12px" href="#">Descubrir Calicasas →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer><div class="wrap">© 2025 Ayuntamiento de Calicasas · Plaza de la Constitución, 1 · 18290 Granada · 958 40 96 01</div></footer>
+</body>
+</html>

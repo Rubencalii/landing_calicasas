@@ -171,7 +171,18 @@
   footer p{font-size:.86rem;line-height:1.8;color:#aecdb9}
   .fbar{padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem;color:#aecdb9}
 
-  @media(max-width:920px){.hero .wrap{grid-template-columns:1fr;text-align:center}.crest-stage{order:-1}.quick .wrap{grid-template-columns:repeat(2,1fr)}.qa{border-bottom:1px solid var(--line)}.agenda{grid-template-columns:1fr}.svcs{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.topbar .l{display:none}nav{display:none}}
+  .menu-toggle{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;align-items:center;justify-content:center;color:var(--sinople)}
+  .menu-toggle svg{width:24px;height:24px}
+  @media(max-width:920px){
+    .hero .wrap{grid-template-columns:1fr;text-align:center}.crest-stage{order:-1}.quick .wrap{grid-template-columns:repeat(2,1fr)}.qa{border-bottom:1px solid var(--line)}.agenda{grid-template-columns:1fr}.svcs{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.topbar .l{display:none}
+    .menu-toggle{display:inline-flex}
+    .cta-desktop{display:none}
+    header .bar{position:relative}
+    nav#navmenu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);border:1px solid var(--line);box-shadow:0 16px 32px rgba(34,28,20,.16);z-index:60;padding:8px;border-radius:0 0 10px 10px}
+    nav#navmenu.open{display:block}
+    nav#navmenu ul{flex-direction:column;gap:2px}
+    nav#navmenu a{display:block;padding:14px 16px;border-radius:6px;font-size:1rem}
+  }
 </style>
 </head>
 <body>
@@ -192,8 +203,9 @@
 
 <header><div class="wrap"><div class="bar">
   <a class="brand" href="#"><img src="assets/escudo-calicasas.svg" alt="Escudo del Ayuntamiento de Calicasas"><span><b>Calicasas</b><span>Excmo. Ayuntamiento · Granada</span></span></a>
-  <nav><ul><li><a href="#">Actualidad</a></li><li><a href="#">Tu Ayuntamiento</a></li><li><a href="#">Conoce tu Pueblo</a></li><li><a href="#">Servicios</a></li><li><a href="#">Contacto</a></li></ul></nav>
-  <a class="btn btn-red" href="#">Sede Electrónica</a>
+  <nav id="navmenu"><ul><li><a href="#">Actualidad</a></li><li><a href="#">Tu Ayuntamiento</a></li><li><a href="#">Conoce tu Pueblo</a></li><li><a href="#">Servicios</a></li><li><a href="#">Contacto</a></li></ul></nav>
+  <a class="btn btn-red cta-desktop" href="#">Sede Electrónica</a>
+  <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navmenu" onclick="var n=document.getElementById('navmenu');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
 </div></div></header>
 
 <section class="hero">
@@ -245,7 +257,6 @@
         </div>
         <div class="subs">
           <a class="btn btn-green" style="justify-content:center" href="#"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Añadir a Google Calendar</a>
-          <a class="btn btn-out" style="justify-content:center" href="#">Suscribir (Apple / Outlook)</a>
         </div>
       </div>
       <div class="events">

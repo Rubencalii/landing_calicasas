@@ -43,6 +43,20 @@
   .s5 span{background:rgba(194,22,29,.85)}
   .s5 img{position:absolute;right:18px;top:50%;transform:translateY(-50%);height:110px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.4))}
   .s5::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,#c2161d,#d8a814,#0071bc)}
+  .s6{background:#0e2a47}
+  .s6 span{background:rgba(21,101,192,.9)}
+  .s6::after{content:"";position:absolute;inset:0;background:
+    repeating-linear-gradient(90deg,transparent 0 28px,rgba(255,255,255,.05) 28px 29px),
+    radial-gradient(150px 90px at 82% 28%,rgba(216,168,20,.28),transparent)}
+  .s6::before{content:"";position:absolute;left:16px;bottom:26px;width:130px;height:34px;border-radius:6px;background:#fff;opacity:.9;box-shadow:34px 0 #fff,-0px 0 #fff}
+  .s7{background:#eef0eb}
+  .s7 span{background:rgba(10,125,77,.9)}
+  .s7::after{content:"";position:absolute;inset:14px;border-radius:12px;background:
+    linear-gradient(150deg,#0a7d4d,#055c34) 0 0/47% 58% no-repeat,
+    #c2161d 50% 0/23% 27% no-repeat,
+    #0071bc 76% 0/23% 27% no-repeat,
+    #fff 50% 31%/49% 25% no-repeat,
+    #f4ecdd 0 62%/100% 38% no-repeat}
   @media(max-width:760px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -50,7 +64,7 @@
 <header>
   <div class="wrap">
     <p class="tag">Ayuntamiento de Calicasas · Rediseño web</p>
-    <h1>Cinco direcciones de diseño</h1>
+    <h1>Seis direcciones de diseño</h1>
     <p>Abre cada propuesta, compáralas y elige la línea que más te encaje. Luego desarrollamos a fondo la elegida. Algunas llevan animaciones y 3D — míralas en pantalla completa.</p>
   </div>
 </header>
@@ -65,26 +79,6 @@
         <p>La primera versión: sobria, segura y muy "administración pública". Verde pino + terracota, jerarquía clara y sin distracciones.</p>
         <div class="chips"><span class="chip">Sobria</span><span class="chip">Confiable</span><span class="chip">Sin animación</span></div>
         <a class="open" href="v0-clasica.html">Ver propuesta →</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="swatch s1"><span>V1 · Aurora</span></div>
-      <div class="body">
-        <h2>Aurora — premium</h2>
-        <p>Fondo de gradiente animado tipo "aurora", glassmorphism, tarjetas con efecto 3D al pasar el ratón y animaciones de aparición al hacer scroll. Moderna y con mucho diseño.</p>
-        <div class="chips"><span class="chip">Glassmorphism</span><span class="chip">Tilt 3D</span><span class="chip">Animaciones</span></div>
-        <a class="open" href="v1-aurora.html">Ver propuesta →</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="swatch s2"><span>V2 · Inmersivo 3D</span></div>
-      <div class="body">
-        <h2>Inmersivo 3D</h2>
-        <p>Hero con una <b>escena 3D real animada</b> (Three.js): un terreno de partículas que ondula y reacciona al ratón. El más espectacular para impactar en la presentación.</p>
-        <div class="chips"><span class="chip">Three.js</span><span class="chip">Parallax</span><span class="chip">WebGL</span></div>
-        <a class="open" href="v2-inmersivo-3d.html">Ver propuesta →</a>
       </div>
     </div>
 
@@ -118,11 +112,28 @@
       </div>
     </div>
 
+    <div class="card">
+      <div class="swatch s6"><span>V6 · Ciudadanía</span></div>
+      <div class="body">
+        <h2>Ciudadanía — funcional</h2>
+        <p>El patrón de los ayuntamientos modernos (Toledo, Granada): <b>trámites destacados</b> muy visibles, buscador prominente, barra de accesibilidad (A-/A+, contraste) y sellos ENS/WCAG. Lo que un alcalde reconoce como "web seria".</p>
+        <div class="chips"><span class="chip">Trámites</span><span class="chip">Accesibilidad</span><span class="chip">GovTech</span></div>
+        <a class="open" href="v6-ciudadania.html">Ver propuesta →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="swatch s7"><span>V7 · Bento</span></div>
+      <div class="body">
+        <h2>Bento — modular</h2>
+        <p>Estilo dashboard de tarjetas de distintos tamaños (tendencia actual): trámites, evento destacado, aviso, mini-calendario y contacto, <b>todo de un vistazo</b>. Con los colores del escudo.</p>
+        <div class="chips"><span class="chip">Bento grid</span><span class="chip">Moderno</span><span class="chip">Todo a la vista</span></div>
+        <a class="open" href="v7-bento.html">Ver propuesta →</a>
+      </div>
+    </div>
+
   </div>
 
-  <div class="note">
-    <p><b>¿Cómo elegir?</b> No tienes que quedarte con una entera: podemos coger, por ejemplo, la <b>base sobria de la V3</b> con el <b>calendario y la calidez de la V4</b>, o el <b>impacto 3D de la V2</b> solo en la portada. Dime cuál te gusta más (o qué mezcla) y desarrollo esa línea a fondo en todas las páginas.</p>
-  </div>
 </div>
 </body>
 </html>

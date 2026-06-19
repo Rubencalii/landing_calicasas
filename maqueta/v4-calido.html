@@ -107,7 +107,18 @@
   footer .crest{margin:0 auto 14px}
   footer p{font-size:.88rem;line-height:1.9}
   footer .links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:18px;font-weight:600;font-size:.86rem}
-  @media(max-width:920px){.hero .wrap{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.svcs{grid-template-columns:repeat(2,1fr)}nav{display:none}}
+  .menu-toggle{display:none;width:48px;height:48px;border:2px solid var(--line);border-radius:16px;background:#fff;cursor:pointer;align-items:center;justify-content:center;color:var(--terra2)}
+  .menu-toggle svg{width:24px;height:24px}
+  @media(max-width:920px){
+    .hero .wrap{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.svcs{grid-template-columns:repeat(2,1fr)}
+    .menu-toggle{display:inline-flex}
+    .cta-desktop{display:none}
+    header .bar{position:relative}
+    nav#navmenu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 36px rgba(58,42,34,.16);z-index:60;padding:10px;margin-top:6px}
+    nav#navmenu.open{display:block}
+    nav#navmenu ul{flex-direction:column;gap:2px}
+    nav#navmenu a{display:block;padding:14px 16px;border-radius:14px;font-size:1rem}
+  }
 </style>
 </head>
 <body>
@@ -115,8 +126,9 @@
 
 <header><div class="wrap"><div class="bar">
   <a class="brand" href="#"><span class="crest">C</span><span><b>Calicasas</b><span>Ayuntamiento · Granada</span></span></a>
-  <nav><ul><li><a href="#">Actualidad</a></li><li><a href="#">Ayuntamiento</a></li><li><a href="#">Tu Pueblo</a></li><li><a href="#">Servicios</a></li></ul></nav>
-  <a class="btn btn-terra" href="#">Sede Electrónica</a>
+  <nav id="navmenu"><ul><li><a href="#">Actualidad</a></li><li><a href="#">Ayuntamiento</a></li><li><a href="#">Tu Pueblo</a></li><li><a href="#">Servicios</a></li></ul></nav>
+  <a class="btn btn-terra cta-desktop" href="#">Sede Electrónica</a>
+  <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navmenu" onclick="var n=document.getElementById('navmenu');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
 </div></div></header>
 
 <section class="hero">

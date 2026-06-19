@@ -197,6 +197,18 @@
     .hero h1{font-size:2rem}
     .fgrid{grid-template-columns:1fr}
   }
+  /* Menú móvil (hamburguesa) */
+  .menu-toggle{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;align-items:center;justify-content:center;color:var(--primary-900)}
+  .menu-toggle svg{width:24px;height:24px}
+  @media (max-width:1024px){
+    .menu-toggle{display:inline-flex}
+    .nav-cta{display:none}
+    header.site .wrap{position:relative}
+    nav.main#navmenu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-top:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:60;padding:10px}
+    nav.main#navmenu.open{display:block}
+    nav.main#navmenu ul{flex-direction:column;gap:2px}
+    nav.main#navmenu a{display:block;padding:14px 16px;border-radius:8px;font-size:1rem}
+  }
 </style>
 </head>
 <body>
@@ -227,7 +239,7 @@
       <span class="crest">C</span>
       <span><b>Ayuntamiento de Calicasas</b><span>Granada · Portal oficial</span></span>
     </a>
-    <nav class="main" aria-label="Navegación principal">
+    <nav class="main" id="navmenu" aria-label="Navegación principal">
       <ul>
         <li><a href="#">Actualidad</a></li>
         <li><a href="#">Tu Ayuntamiento</a></li>
@@ -239,6 +251,7 @@
     <div class="nav-cta">
       <a class="btn btn-primary" href="#">Sede Electrónica</a>
     </div>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navmenu" onclick="var n=document.getElementById('navmenu');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
 </header>
 
