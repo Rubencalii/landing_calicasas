@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calicasas · V2 Inmersivo 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06100c; --ink:#e9f5ef; --muted:#9bb4a9;
+    --green:#3ddc84; --teal:#22d3c5; --lime:#a3e635; --amber:#f5b94a;
+    --font:'Inter',system-ui,sans-serif; --font-d:'Space Grotesk',system-ui,sans-serif;
+    --wrap:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:var(--font-d);line-height:1.05;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  #scene{position:fixed;inset:0;z-index:0}
+  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+    radial-gradient(120% 80% at 50% 0%,transparent 40%,rgba(6,16,12,.7) 100%),
+    linear-gradient(180deg,transparent 50%,var(--bg) 92%)}
+  .content{position:relative;z-index:2}
+  .eyebrow{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700}
+  .glass{background:rgba(10,22,17,.55);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);border-radius:18px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;padding:13px 24px;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:.2s}
+  .btn-grad{background:linear-gradient(100deg,var(--green),var(--teal));color:#04130d;box-shadow:0 10px 36px rgba(61,220,132,.4)}
+  .btn-grad:hover{transform:translateY(-2px);box-shadow:0 14px 46px rgba(61,220,132,.55)}
+  .btn-out{border-color:rgba(255,255,255,.25);color:#fff}
+  .btn-out:hover{background:rgba(255,255,255,.1)}
+
+  .ribbon{position:fixed;top:0;left:0;right:0;z-index:40;background:#04130d;color:var(--teal);text-align:center;font-size:.74rem;padding:6px;letter-spacing:.06em;font-weight:600}
+  header{position:absolute;top:34px;left:0;right:0;z-index:20}
+  header .bar{display:flex;align-items:center;justify-content:space-between;padding:12px 22px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-d);font-weight:700;font-size:1.05rem}
+  .crest{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--green),var(--teal));display:grid;place-items:center;color:#04130d;font-weight:700}
+  nav ul{display:flex;gap:4px;list-style:none}
+  nav a{padding:9px 14px;border-radius:10px;font-weight:500;font-size:.9rem;color:var(--muted)}
+  nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+
+  .hero{min-height:100vh;display:flex;align-items:center;text-align:center}
+  .hero .wrap{width:100%}
+  .hero h1{font-size:clamp(2.8rem,8vw,6rem);font-weight:700;max-width:14ch;margin:18px auto 0}
+  .hero h1 em{font-style:normal;background:linear-gradient(100deg,var(--lime),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:1.2rem;max-width:50ch;margin:22px auto 0}
+  .cta-row{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+  .scrollcue{margin-top:60px;color:var(--muted);font-size:.8rem;animation:bob 2s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(8px)}}
+
+  section{padding:80px 0;position:relative}
+  .sec-head{text-align:center;margin-bottom:46px}
+  .sec-head h2{font-size:clamp(1.9rem,4vw,2.9rem);margin-top:10px}
+  .reveal{opacity:0;transform:translateY(34px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  .agenda{display:grid;grid-template-columns:1fr 1.1fr;gap:24px}
+  .cal{padding:28px}
+  .calhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .calhead b{font-family:var(--font-d);font-size:1.15rem}
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+  .dow{font-size:.66rem;color:var(--muted);font-weight:700;padding:5px 0}
+  .day{padding:9px 0;font-size:.83rem;border-radius:9px;position:relative}
+  .day.mut{color:#39504a}
+  .day.ev{background:rgba(61,220,132,.14);color:var(--green);font-weight:700}
+  .day.ev::after{content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--lime)}
+  .day.today{background:linear-gradient(135deg,var(--green),var(--teal));color:#04130d;font-weight:800}
+  .subs{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);display:flex;gap:10px}
+  .events{display:flex;flex-direction:column;gap:14px}
+  .ev{display:flex;gap:16px;padding:18px;transition:.3s}
+  .ev:hover{transform:translateX(6px)}
+  .ev .date{flex:none;width:58px;text-align:center}
+  .ev .date .d{font-family:var(--font-d);font-size:1.55rem;font-weight:700;color:var(--lime);line-height:1}
+  .ev .date .m{font-size:.68rem;text-transform:uppercase;color:var(--muted);margin-top:3px}
+  .ev h3{font-size:1.02rem;font-weight:600}
+  .ev .meta{color:var(--muted);font-size:.82rem;margin-top:5px}
+  .tag{display:inline-block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px;background:rgba(245,185,74,.16);color:var(--amber);margin-bottom:7px}
+
+  .svcs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .svc{padding:22px;transition:.3s;cursor:pointer}
+  .svc:hover{transform:translateY(-6px);border-color:rgba(61,220,132,.4)}
+  .svc .ic{width:46px;height:46px;border-radius:12px;background:rgba(34,211,197,.12);display:grid;place-items:center;margin-bottom:14px}
+  .svc .ic svg{width:22px;height:22px;stroke:var(--teal)}
+  .svc b{font-family:var(--font-d);display:block;font-size:.96rem}
+  .svc span{color:var(--muted);font-size:.8rem}
+
+  footer{padding:50px 0 34px;border-top:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:.85rem;text-align:center}
+  @media(max-width:920px){.agenda{grid-template-columns:1fr}.svcs{grid-template-columns:repeat(2,1fr)}nav{display:none}}
+</style>
+</head>
+<body>
+<div class="ribbon">✦ MAQUETA · DIRECCIÓN V2 «INMERSIVO 3D» — escena 3D animada (mueve el ratón en el hero)</div>
+<canvas id="scene"></canvas>
+<div class="veil"></div>
+
+<div class="content">
+<header><div class="wrap"><div class="bar">
+  <a class="brand" href="#"><span class="crest">C</span> Calicasas</a>
+  <nav><ul><li><a href="#">Actualidad</a></li><li><a href="#">Ayuntamiento</a></li><li><a href="#">Tu Pueblo</a></li><li><a href="#">Servicios</a></li></ul></nav>
+  <a class="btn btn-grad" href="#">Sede Electrónica</a>
+</div></div></header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Ayuntamiento de Calicasas · Granada</p>
+    <h1>Un pueblo <em>vivo</em>, también en lo digital.</h1>
+    <p>Explora, tramita y vive Calicasas. Todos los eventos del municipio, sincronizados con tu calendario.</p>
+    <div class="cta-row">
+      <a class="btn btn-grad" href="#explora">Descubre el portal</a>
+      <a class="btn btn-out" href="#">Sede Electrónica</a>
+    </div>
+    <div class="scrollcue">↓ desliza para explorar</div>
+  </div>
+</section>
+
+<div id="explora"></div>
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">No te lo pierdas</p><h2>Agenda del municipio</h2></div>
+    <div class="agenda">
+      <div class="cal glass reveal">
+        <div class="calhead"><b>Julio 2025</b><span style="color:var(--muted)">‹ ›</span></div>
+        <div class="calgrid">
+          <div class="dow">L</div><div class="dow">M</div><div class="dow">X</div><div class="dow">J</div><div class="dow">V</div><div class="dow">S</div><div class="dow">D</div>
+          <div class="day mut">30</div><div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day ev">4</div><div class="day">5</div><div class="day">6</div>
+          <div class="day ev">7</div><div class="day">8</div><div class="day ev">9</div><div class="day">10</div><div class="day ev">11</div><div class="day">12</div><div class="day">13</div>
+          <div class="day ev">14</div><div class="day">15</div><div class="day">16</div><div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div>
+          <div class="day ev">21</div><div class="day">22</div><div class="day">23</div><div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div>
+          <div class="day ev">28</div><div class="day">29</div><div class="day">30</div><div class="day">31</div><div class="day mut">1</div><div class="day mut">2</div><div class="day mut">3</div>
+        </div>
+        <div class="subs">
+          <a class="btn btn-grad" style="flex:1;justify-content:center" href="#">+ Google Calendar</a>
+          <a class="btn btn-out" style="flex:1;justify-content:center" href="#">Apple / Outlook</a>
+        </div>
+      </div>
+      <div class="events">
+        <div class="ev glass reveal"><div class="date"><div class="d">28</div><div class="m">Jun</div></div><div><span class="tag">Fiestas</span><h3>Fiesta Hawaiana · Verano'25</h3><div class="meta">📍 Parque Mariana Pineda</div></div></div>
+        <div class="ev glass reveal"><div class="date"><div class="d">04</div><div class="m">Jul</div></div><div><span class="tag">Cultura</span><h3>Cine de Verano: "La Sirenita"</h3><div class="meta">📍 Parque Mariana Pineda · 22:00</div></div></div>
+        <div class="ev glass reveal"><div class="date"><div class="d">09</div><div class="m">Jul</div></div><div><span class="tag">Cultura</span><h3>Gala de baile flamenco</h3><div class="meta">📍 Plaza de la Constitución · 22:00</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Para el día a día</p><h2>Servicios del municipio</h2></div>
+    <div class="svcs">
+      <div class="svc glass reveal"><div class="ic"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0012 5 4.5 4.5 0 002 8.5C2 10.7 3.5 12.5 5 14l7 7z"/></svg></div><b>Centro de Salud</b><span>Citas y horarios</span></div>
+      <div class="svc glass reveal"><div class="ic"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/></svg></div><b>Biblioteca</b><span>Horario y club</span></div>
+      <div class="svc glass reveal"><div class="ic"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 000 18M3 12h18"/></svg></div><b>Guadalinfo</b><span>Acceso digital</span></div>
+      <div class="svc glass reveal"><div class="ic"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div><b>Transporte</b><span>Líneas de bus</span></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© 2025 Ayuntamiento de Calicasas · Plaza de la Constitución, 1 · 958 40 96 01</div></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // Reveal on scroll
+  const io=new IntersectionObserver(es=>es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // THREE.js animated wave-terrain of particles
+  const canvas=document.getElementById('scene');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,200);
+  camera.position.set(0,14,34);
+  camera.lookAt(0,0,0);
+
+  // Grid of points
+  const SIZE=64, SPACING=1.5;
+  const positions=[];
+  const colors=[];
+  const c1=new THREE.Color('#3ddc84'), c2=new THREE.Color('#22d3c5'), c3=new THREE.Color('#a3e635');
+  for(let x=0;x<SIZE;x++)for(let z=0;z<SIZE;z++){
+    positions.push((x-SIZE/2)*SPACING,0,(z-SIZE/2)*SPACING);
+    const t=Math.random();const col=t<.5?c1.clone().lerp(c2,t*2):c2.clone().lerp(c3,(t-.5)*2);
+    colors.push(col.r,col.g,col.b);
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
+  const mat=new THREE.PointsMaterial({size:.28,vertexColors:true,transparent:true,opacity:.9,sizeAttenuation:true});
+  const points=new THREE.Points(geo,mat);
+  scene.add(points);
+
+  let mx=0,my=0;
+  addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5)});
+
+  const pos=geo.attributes.position;
+  function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+  addEventListener('resize',resize);resize();
+
+  let t=0;
+  function animate(){
+    t+=0.02;
+    for(let i=0;i<pos.count;i++){
+      const x=pos.getX(i),z=pos.getZ(i);
+      const y=Math.sin(x*0.18+t)*1.6+Math.cos(z*0.22+t*0.8)*1.6;
+      pos.setY(i,y);
+    }
+    pos.needsUpdate=true;
+    points.rotation.y+=0.0009;
+    camera.position.x+= (mx*10-camera.position.x)*0.04;
+    camera.position.y+= (14-my*8-camera.position.y)*0.04;
+    camera.lookAt(0,0,0);
+    renderer.render(scene,camera);
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+</body>
+</html>

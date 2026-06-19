@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calicasas · V3 Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f1ea; --paper2:#eae3d6; --ink:#1a1f1c; --muted:#6b6258;
+    --green:#2c5f4f; --ochre:#b5742a; --line:#d9d2c4;
+    --font:'Inter',system-ui,sans-serif; --font-s:'Fraunces',Georgia,serif;
+    --wrap:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.65}
+  h1,h2,h3{font-family:var(--font-s);font-weight:500;line-height:1.08;letter-spacing:-.015em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
+  .rule{height:1px;background:var(--line)}
+  .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ochre);font-weight:600}
+  .reveal{opacity:0;transform:translateY(22px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  .ribbon{background:var(--ink);color:var(--paper);text-align:center;font-size:.74rem;padding:7px;letter-spacing:.06em;font-weight:600}
+  header{position:sticky;top:0;z-index:30;background:rgba(244,241,234,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header .bar{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{font-family:var(--font-s);font-size:1.3rem;font-weight:600;letter-spacing:-.01em}
+  .brand small{display:block;font-family:var(--font);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:2px}
+  nav ul{display:flex;gap:28px;list-style:none}
+  nav a{font-size:.86rem;font-weight:500;color:var(--ink);position:relative;padding:4px 0}
+  nav a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--green);transition:.3s}
+  nav a:hover::after{width:100%}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.84rem;padding:11px 22px;border-radius:2px;border:1px solid var(--ink);transition:.2s}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn-fill{background:var(--green);border-color:var(--green);color:#fff}
+  .btn-fill:hover{background:#234b3e;border-color:#234b3e;color:#fff}
+
+  /* Hero editorial */
+  .hero{padding:90px 0 70px}
+  .hero .eyebrow{margin-bottom:26px}
+  .hero h1{font-size:clamp(3rem,8vw,6.6rem);max-width:14ch}
+  .hero h1 em{font-style:italic;color:var(--green)}
+  .hero .sub{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;margin-top:40px}
+  .hero .sub p{color:var(--muted);font-size:1.12rem;max-width:46ch}
+  .meta-strip{display:flex;gap:40px;margin-top:60px;padding-top:30px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .meta-strip div b{font-family:var(--font-s);font-size:1.9rem;font-weight:600;display:block}
+  .meta-strip div span{font-size:.8rem;color:var(--muted);letter-spacing:.04em}
+
+  section{padding:80px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(2rem,4vw,3rem)}
+  .sec-head a{font-size:.84rem;font-weight:600;color:var(--green);border-bottom:1px solid var(--green);padding-bottom:2px}
+
+  /* Agenda editorial list */
+  .agenda-list{border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);transition:.25s}
+  .row:hover{padding-left:14px;background:rgba(44,95,79,.04)}
+  .row .when{font-family:var(--font-s);font-size:1.2rem;color:var(--green)}
+  .row .what h3{font-size:1.45rem;font-weight:500}
+  .row .what span{color:var(--muted);font-size:.9rem}
+  .row .cat{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);font-weight:600}
+  .subscribe{display:flex;gap:14px;align-items:center;margin-top:34px;flex-wrap:wrap}
+  .subscribe span{color:var(--muted);font-size:.9rem;font-style:italic;font-family:var(--font-s)}
+
+  /* Services columns */
+  .svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+  .svc{padding:34px 30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:.25s}
+  .svc:hover{background:#fff}
+  .svc .n{font-family:var(--font-s);font-size:.9rem;color:var(--ochre)}
+  .svc h3{font-size:1.4rem;font-weight:500;margin:10px 0 6px}
+  .svc p{color:var(--muted);font-size:.9rem}
+
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;border:1px solid var(--line)}
+  .feature .txt{padding:56px 48px}
+  .feature .txt h2{font-size:2.4rem;margin:14px 0 16px}
+  .feature .txt p{color:var(--muted);max-width:40ch}
+  .feature .img{background:
+    repeating-linear-gradient(45deg,rgba(44,95,79,.06) 0 16px,transparent 16px 32px),var(--paper2);
+    display:grid;place-items:center;color:var(--muted);font-family:var(--font-s);font-style:italic;min-height:340px}
+
+  footer{padding:60px 0 36px;border-top:1px solid var(--line);margin-top:30px}
+  .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  footer .brand{font-size:1.4rem}
+  footer p{color:var(--muted);font-size:.86rem;margin-top:10px;line-height:1.8}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  footer ul a{font-size:.86rem;color:var(--ink)}
+  footer ul a:hover{color:var(--green)}
+  .fbar{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+  @media(max-width:860px){nav{display:none}.svcs{grid-template-columns:1fr}.feature{grid-template-columns:1fr}.row{grid-template-columns:90px 1fr}.row .cat{display:none}.hero .sub{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="ribbon">✦ MAQUETA · DIRECCIÓN V3 «EDITORIAL» — minimalista, serif, mucho aire</div>
+
+<header><div class="wrap"><div class="bar">
+  <a class="brand" href="#">Calicasas<small>Ayuntamiento · Granada</small></a>
+  <nav><ul><li><a href="#">Actualidad</a></li><li><a href="#">Tu Ayuntamiento</a></li><li><a href="#">Tu Pueblo</a></li><li><a href="#">Servicios</a></li><li><a href="#">Contacto</a></li></ul></nav>
+  <a class="btn btn-fill" href="#">Sede Electrónica</a>
+</div></div></header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow reveal">Portal oficial del Excmo. Ayuntamiento</p>
+    <h1 class="reveal">Calicasas,<br>donde la vida <em>sucede</em>.</h1>
+    <div class="sub reveal">
+      <p>Un pueblo de la Vega de Granada. Aquí encuentras tus trámites, los avisos del ayuntamiento y la agenda cultural, con la calma y el cuidado que merece lo público.</p>
+      <a class="btn" href="#">Conoce el pueblo →</a>
+    </div>
+    <div class="meta-strip reveal">
+      <div><b>1.300</b><span>habitantes</span></div>
+      <div><b>S. XVI</b><span>de historia</span></div>
+      <div><b>24/7</b><span>sede electrónica</span></div>
+      <div><b>+30</b><span>eventos al año</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><p class="eyebrow">Agenda cultural</p><h2>Lo que viene este verano</h2></div>
+      <a href="#">Ver agenda completa</a>
+    </div>
+    <div class="agenda-list">
+      <div class="row reveal"><div class="when">28 Jun</div><div class="what"><h3>Fiesta Hawaiana · comienzo del Verano'25</h3><span>Parque Mariana Pineda</span></div><div class="cat">Fiestas</div></div>
+      <div class="row reveal"><div class="when">04 Jul</div><div class="what"><h3>Cine de Verano: «La Sirenita»</h3><span>Parque Mariana Pineda · 22:00 h</span></div><div class="cat">Cultura</div></div>
+      <div class="row reveal"><div class="when">09 Jul</div><div class="what"><h3>Gala de baile flamenco · Academia Mónica Morales</h3><span>Plaza de la Constitución · 22:00 h</span></div><div class="cat">Cultura</div></div>
+      <div class="row reveal"><div class="when">11 Jul</div><div class="what"><h3>Karting Calicasas</h3><span>Karting Grana, Purchil · 20:00 h</span></div><div class="cat">Deporte</div></div>
+    </div>
+    <div class="subscribe reveal">
+      <span>Llévate la agenda contigo:</span>
+      <a class="btn" href="#">Añadir a Google Calendar</a>
+      <a class="btn" href="#">Suscribir (Apple / Outlook)</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><p class="eyebrow">Servicios</p><h2>Para el día a día</h2></div><a href="#">Todos los servicios</a></div>
+    <div class="svcs reveal">
+      <div class="svc"><div class="n">01</div><h3>Centro de Salud</h3><p>Citas, horarios de consulta y teléfonos de urgencia.</p></div>
+      <div class="svc"><div class="n">02</div><h3>Biblioteca</h3><p>Horario, préstamo y actividades de fomento de la lectura.</p></div>
+      <div class="svc"><div class="n">03</div><h3>Guadalinfo</h3><p>Acceso a internet, formación y trámites asistidos.</p></div>
+      <div class="svc"><div class="n">04</div><h3>Polideportivo</h3><p>Reserva de pistas e instalaciones deportivas municipales.</p></div>
+      <div class="svc"><div class="n">05</div><h3>Transporte</h3><p>Líneas y horarios de autobús con la comarca.</p></div>
+      <div class="svc"><div class="n">06</div><h3>Juzgado de Paz</h3><p>Atención, registro y trámites de carácter civil.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature reveal">
+      <div class="txt">
+        <p class="eyebrow">Conoce tu pueblo</p>
+        <h2>Historia, patrimonio y tradiciones</h2>
+        <p>Pasea por los rincones de Calicasas: su iglesia, sus fiestas y la memoria de un pueblo de la Vega. Descúbrelo en nuestra sección de patrimonio.</p>
+        <a class="btn" href="#" style="margin-top:26px">Descubrir Calicasas →</a>
+      </div>
+      <div class="img">[ Fotografía del municipio ]</div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div style="max-width:280px">
+      <div class="brand">Calicasas</div>
+      <p>Plaza de la Constitución, 1<br>18290 Calicasas, Granada<br>958 40 96 01<br>ayto.calicasas@gmail.com</p>
+    </div>
+    <ul><li style="font-weight:600;font-family:var(--font-s)">Ayuntamiento</li><li><a href="#">Saluda del Alcalde</a></li><li><a href="#">Transparencia</a></li><li><a href="#">Perfil del Contratante</a></li></ul>
+    <ul><li style="font-weight:600;font-family:var(--font-s)">Servicios</li><li><a href="#">Centro de Salud</a></li><li><a href="#">Biblioteca</a></li><li><a href="#">Transporte</a></li></ul>
+    <ul><li style="font-weight:600;font-family:var(--font-s)">Ayuda</li><li><a href="#">Contacto</a></li><li><a href="#">Accesibilidad</a></li><li><a href="#">Aviso legal</a></li></ul>
+  </div>
+  <div class="fbar">© 2025 Ayuntamiento de Calicasas. Todos los derechos reservados.</div>
+</div></footer>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*55);io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
